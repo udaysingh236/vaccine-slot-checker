@@ -1,0 +1,36 @@
+{
+  "name": "vaccine-slot-checker",
+  "version": "1.0.0",
+  "description": "Covid 19 vaccination slot checker. This app will check for the open slots and immediately mail you in case the slot is available.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/udaysingh236/vaccine-slot-checker.git"
+  },
+  "keywords": [
+    "covid",
+    "india",
+    "vaccination",
+    "cowin",
+    "arogya",
+    "setu",
+    "cowin-api",
+    "slots",
+    "vaccine"
+  ],
+  "author": "Uday Singh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/udaysingh236/vaccine-slot-checker/issues"
+  },
+  "homepage": "https://github.com/udaysingh236/vaccine-slot-checker#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^9.0.0",
+    "googleapis": "^39.2.0",
+    "nodemailer": "^6.6.0"
+  }
+}
