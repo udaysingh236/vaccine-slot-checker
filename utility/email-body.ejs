@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vaccine Slot</title>
+</head>
+
+<body>
+    <br><br>
+    <h3> Hi <%= payload.name %>,</h3>
+    <h4 align='center'>Found AVAILABLE slot for 18+, here are the details: </h4>
+    <h4 align='center'>Center name: <%= payload.centerName %></h4>
+    <h4 align='center'>Center address: <%= payload.address %></h4>
+    <h4 align='center'>District name: <%= payload.district_name %></h4>
+    <h4 align='center'>State Name: <%= payload.state_name %></h4>
+    <h4 align='center'>Center pincode: <%= payload.pincode %></h4>
+    <h4 align='center'>Available Date: <%= payload.date %></h4>
+    <h4 align='center'>Available Capacity: <%= payload.available_capacity %></h4>
+    <div align='center'>
+    <h3>Register quickly on: </h3><a href="https://selfregistration.cowin.gov.in/" target="_blank">https://selfregistration.cowin.gov.in/</a>
+
+    <h3>To stop receiving email notification click on the below link and edit your previous response.</h3>
+    <h3>Select 'No' for "Receive Email Notification when slot available"</h3>
+    <a href="<%= payload.unfollow %>">Submit Respone Again</a>
+    </div>
+</body>
+
+</html>

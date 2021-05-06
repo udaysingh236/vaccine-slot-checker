@@ -17,6 +17,7 @@ exports.getDataFromGoogleSheet = async () => {
     try {
         const pincodes = [];
         const pinToEmail = {};
+        const userDetails = {};
         const {client_secret, client_id, redirect_uris} = credContent;
 
         // * Create an OAuth2 client with the given credentials
@@ -41,20 +42,22 @@ exports.getDataFromGoogleSheet = async () => {
                 if (pincodes.indexOf(row[3]) !== -1) {
                   if (pinToEmail[row[3]].indexOf(row[0]) === -1 && row[1].toUpperCase() === "YES") {
                     pinToEmail[row[3]].push(row[0]);
+                    userDetails[row[0]] = [row[0], row[2], row[4], row[6]]
                   } else if (pinToEmail[row[3]].indexOf(row[0]) !== -1 && row[1].toUpperCase() === "NO") {
                     pinToEmail[row[3]].splice(pinToEmail[row[3]].indexOf(row[0]), 1);
                   }
                 } else {
                   if (row[1].toUpperCase() === "YES") {
                     pincodes.push(row[3]);
-                    pinToEmail[row[3]] = [row[0]] 
+                    pinToEmail[row[3]] = [row[0]]
+                    userDetails[row[0]] = [row[0], row[2], row[4], row[6]]
                   }
                 }
             }) 
         } else {
             console.log('No data found.');
         }
-        return {pincodes, pinToEmail };
+        return {pincodes, pinToEmail, userDetails };
     } catch (error) {
         console.log(`Error in getDataFromGoogleSheet, error is: ${error}`);
         throw error;

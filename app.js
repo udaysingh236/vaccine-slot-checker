@@ -41,14 +41,17 @@ let startApp = async () => {
             const localContent = JSON.parse(content);
             pincodes = localContent.pincodes;
             pinToEmail = localContent.pinToEmail;
+            userDetails = localContent.userDetails;
         } else {
             pincodes = finalData.pincodes;
             pinToEmail = finalData.pinToEmail;
+            userDetails = finalData.userDetails;
         }
-        await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail)
+        await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail, userDetails)
         let allLocalData = {
             pincodes: pincodes,
-            pinToEmail: pinToEmail
+            pinToEmail: pinToEmail,
+            userDetails: userDetails
         }
         await fs.writeFile('localSheet.json', JSON.stringify(allLocalData));
         // console.log(JSON.stringify(slotData, null, 2));  
