@@ -15,7 +15,7 @@ try {
             // console.log(JSON.stringify(slotsData, null, 2));
             for (let slotIndex = 0; slotIndex < slotsData.length; slotIndex++) {
                 if (typeof slotsData[slotIndex] !== 'undefined' ) {
-                    // console.log(JSON.stringify(slotsData[slotIndex], null, 2));
+                    console.log(`Found Data for Api: ${pincodeArray[pinIndex]}`);
                     slotsData[slotIndex]["centers"].forEach(sessionData => {
                         sessionData["sessions"].forEach(sessionInfo => {
                             if (sessionInfo.min_age_limit < 45 && sessionInfo.available_capacity > 0) {

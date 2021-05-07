@@ -59,7 +59,7 @@ exports.getDataFromGoogleSheet = async () => {
         }
         return {pincodes, pinToEmail, userDetails };
     } catch (error) {
-        console.log(`Error in getDataFromGoogleSheet, error is: ${error}`);
+        console.log(`Error in getDataFromGoogleSheet, error is: ${JSON.stringify(error)}`);
         throw error;
     }
 
