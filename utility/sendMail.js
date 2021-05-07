@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
     port: process.env.PORT,
     secure: process.env.SECURE,
     auth: {
-        user: process.env.USER,
+        user: process.env.MAIL_USER,
         pass: process.env.PASS,
     },
     tls: {
@@ -32,15 +32,16 @@ exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
                 console.log(err);
             } else {
                 let mainOptions = {
-                    from: process.env.USER,
+                    from: process.env.MAIL_USER,
                     to: pinToEmail[index],
-                    subject: `Slots available at ${sessionData.pincode} on ${sessionInfo.date}`,
+                    subject: `New slots available near your location`,
                     html: data
                 };
                 transporter.sendMail(mainOptions, (err, info) => {
                     if (err) {
                         console.log(err);
                     } else {
+                        console.log(`Email Sent sucessfully to ${pinToEmail[index]} for Date ${sessionInfo.date} and pincode ${sessionData.pincode}`)
                         console.log('Message sent: ' + info.response);
                     }
                 });

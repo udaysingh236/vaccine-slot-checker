@@ -9,28 +9,22 @@
     <style>
         body {
             padding-left: 20px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-            box-sizing: border-box;
         }
     </style>
 </head>
 
 <body>
-    <p>Hi <%= payload.name %>, <br> <br> Found <strong>AVAILABLE</strong> slot for 18+, here are the details: </p>
+    <p>Hi <%= payload.name %>, <br> <br> Found an <strong>AVAILABLE</strong> slot for 18+, here are the details: </p>
     <ul>
         <li style="list-style-type:square">Center name: <%= payload.centerName %></li>
         <li style="list-style-type:square">Center address: <%= payload.address %></li>
         <li style="list-style-type:square">District name: <%= payload.district_name %></li>
         <li style="list-style-type:square">State Name: <%= payload.state_name %></li>
-        <li style="list-style-type:square">Center pincode: <%= payload.pincode %></li>
+        <li style="list-style-type:square">Center Pincode: <%= payload.pincode %></li>
         <li style="list-style-type:square">Available Date: <%= payload.date %></li>
         <li style="list-style-type:square">Available Capacity: <%= payload.available_capacity %></li>
     </ul>
-    <p>Register quickly on: <a href="https://selfregistration.cowin.gov.in/" target="_blank">https://selfregistration.cowin.gov.in/</a></p>
-
-    <p>To stop receiving email notification click on the below link and edit your previous response <br> Select 'No' for "Receive Email Notification when slot available" <br> Edit Response: <a href="<%= payload.unfollow %>" target="_blank">Edit Response</a>"</p>
-
-    <p>Please let me know your suggestions, complaints and feedback by replying to this mail. <br> Alternatively contact me at: <a href="https://udaysingh236.github.io/contact.html">https://udaysingh236.github.io/contact.html</a> <br> <br> I hope it was helpful for you. <strong>Stay safe, keep similing, we shall overcome..!!</strong></p>
+    <p>Please let me know your suggestions, complaints and feedback.<br> <br> I hope it was helpful for you. <strong>Stay safe, keep smiling, we shall overcome..!!</strong></p>
     <p>Thank and Regards <br> Uday Singh </p>
 </body>
 
