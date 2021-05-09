@@ -2,10 +2,21 @@ require('dotenv').config();
 const model = require("./models/index")
 const formData = require("./iolayer/sheet");
 const fs = require('fs').promises;
+const os = require("os");
+
+// Its like 100 api calls in 5 mins, 24 * 4(dates) = 96 which is less than 100 
+const API_CALLS = 24;  
+const hostnameIndex = {
+    "vaccine-slot-1": [API_CALLS*0, API_CALLS],
+    "vaccine-slot-2": [API_CALLS*1, API_CALLS],
+    "vaccine-slot-3": [API_CALLS*2, API_CALLS],
+    "vaccine-slot-4": [API_CALLS*3, API_CALLS],
+    "vaccine-slot-5": [API_CALLS*4, API_CALLS],
+}
 let createSevenDate = () => {
     const finalDates = [];
     let currentDate = new Date();
-    for (let index = 0; index < 7; index++) {
+    for (let index = 0; index < 4; index++) {
         let tempDate, tempMonth, tempYear;
         let tempDateArray  = currentDate.toLocaleDateString().toString().split('/');
         if (tempDateArray[1].length === 1) {
@@ -29,7 +40,7 @@ let startApp = async () => {
     try {
         let finalDatesArray = createSevenDate();
         console.log(finalDatesArray);
-        let pincodes, pinToEmail;
+        let pincodes, pinToEmail, pinBatch;
         const finalData =  await formData.getDataFromGoogleSheet().catch((error) => {
             console.log(`Error in getDataFromGoogleSheet call, Filling from local, ${error}`);
         });
@@ -47,6 +58,18 @@ let startApp = async () => {
             pinToEmail = finalData.pinToEmail;
             userDetails = finalData.userDetails;
         }
+        console.log("pincodes.length " + pincodes.length);
+        console.log("pincodes " + pincodes);
+        if (pincodes.length > API_CALLS) {
+            console.log("Hostname: " + os.hostname);
+            if (os.hostname().toLowerCase() in hostnameIndex) {
+                pincodes = pincodes.splice(hostnameIndex[os.hostname().toLowerCase()][0], hostnameIndex[os.hostname().toLowerCase()][1])
+            } else {
+                // In case if servers are less and number of pincodes are high take the last 24 and hit them.
+                pincodes = pincodes.splice(pincodes.length - API_CALLS , API_CALLS)
+            }
+        } 
+        console.log(`pincodes going: ${pincodes}`);
         await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail, userDetails)
         let allLocalData = {
             pincodes: pincodes,

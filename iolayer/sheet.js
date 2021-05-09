@@ -41,16 +41,20 @@ exports.getDataFromGoogleSheet = async () => {
             rows.map((row) => {
                 if (pincodes.indexOf(row[3]) !== -1) {
                   if (pinToEmail[row[3]].indexOf(row[0]) === -1 && row[1].toUpperCase() === "YES") {
-                    pinToEmail[row[3]].push(row[0]);
-                    userDetails[row[0]] = [row[0], row[2], row[4], row[6]]
+                    if (Number.isInteger(parseInt(row[3]))) {
+                        pinToEmail[row[3]].push(row[0]);
+                        userDetails[row[0]] = [row[0], row[2], row[4], row[6]]   
+                    }
                   } else if (pinToEmail[row[3]].indexOf(row[0]) !== -1 && row[1].toUpperCase() === "NO") {
                     pinToEmail[row[3]].splice(pinToEmail[row[3]].indexOf(row[0]), 1);
                   }
                 } else {
                   if (row[1].toUpperCase() === "YES") {
-                    pincodes.push(row[3]);
-                    pinToEmail[row[3]] = [row[0]]
-                    userDetails[row[0]] = [row[0], row[2], row[4], row[6]]
+                    if (Number.isInteger(parseInt(row[3]))) {
+                        pincodes.push(row[3]);
+                        pinToEmail[row[3]] = [row[0]]
+                        userDetails[row[0]] = [row[0], row[2], row[4], row[6]]   
+                    }
                   }
                 }
             }) 
