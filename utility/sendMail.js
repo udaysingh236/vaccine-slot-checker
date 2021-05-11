@@ -13,21 +13,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const transPortOption = {
-    host: process.env.SMTP_URL,
-    port: process.env.PORT,
-    secure: process.env.SECURE,
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.PASS,
-    },
-    tls: {
-        rejectUnauthorized: process.env.SECURE,
-    }
-}
-
 exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
-    console.log(`Transport Option: ${JSON.stringify(transPortOption, null, 2)}`);
     for (let index = 0; index < pinToEmail.length; index++) {
         let payload = {
             name: userDetails[pinToEmail[index]][1],
@@ -52,7 +38,6 @@ exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
                     subject: `New slots available near your location`,
                     html: data
                 };
-                console.log(`Sending mail metadata: ${JSON.stringify(mainOptions, null, 2)}`);
                 transporter.sendMail(mainOptions, (err, info) => {
                     if (err) {
                         console.log(`Email Error: ${JSON.stringify(err, null, 2)}`);
