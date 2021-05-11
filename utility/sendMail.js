@@ -55,7 +55,7 @@ exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
                 console.log(`Sending mail metadata: ${JSON.stringify(mainOptions, null, 2)}`);
                 transporter.sendMail(mainOptions, (err, info) => {
                     if (err) {
-                        console.log(`Email Error: ${err}`);
+                        console.log(`Email Error: ${JSON.stringify(err, null, 2)}`);
                     } else {
                         console.log(`Email Sent sucessfully to ${pinToEmail[index]} for Date ${sessionInfo.date} and pincode ${sessionData.pincode}`)
                         console.log('Message sent: ' + info.response);
