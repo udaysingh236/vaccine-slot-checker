@@ -20,6 +20,7 @@ try {
                         sessionData["sessions"].forEach(sessionInfo => {
                             if (sessionInfo.min_age_limit < 45 && sessionInfo.available_capacity > 0) {
                                 // Send email right now, dont wait
+                                console.log("Going to send mail to : " + JSON.stringify(pinToEmail[pincodeArray[pinIndex]]));
                                 notify.sendEmails(sessionInfo, sessionData, pinToEmail[pincodeArray[pinIndex]], userDetails);
                             }
                         })

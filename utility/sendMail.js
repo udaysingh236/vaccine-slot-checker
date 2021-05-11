@@ -27,19 +27,22 @@ exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
             available_capacity: sessionInfo.available_capacity,
             unfollow: userDetails[pinToEmail[index]][3]
         }
+        const toUSer = pinToEmail[index];
+        const fromMailer  = process.env.MAIL_USER;
         ejs.renderFile(__dirname + "/email-body.ejs", {payload: payload}, (err, data) => {
             if (err) {
-                console.log(err);
+                console.log(`EJS error: ${err}`);
             } else {
-                let mainOptions = {
-                    from: process.env.MAIL_USER,
-                    to: pinToEmail[index],
+                const mainOptions = {
+                    from: fromMailer,
+                    to: toUSer,
                     subject: `New slots available near your location`,
                     html: data
                 };
+                console.log(`Sending mail metadata: ${mainOptions}`);
                 transporter.sendMail(mainOptions, (err, info) => {
                     if (err) {
-                        console.log(err);
+                        console.log(`Email Error: ${err}`);
                     } else {
                         console.log(`Email Sent sucessfully to ${pinToEmail[index]} for Date ${sessionInfo.date} and pincode ${sessionData.pincode}`)
                         console.log('Message sent: ' + info.response);

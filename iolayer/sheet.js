@@ -18,7 +18,13 @@ exports.getDataFromGoogleSheet = async () => {
         const pincodes = [];
         const pinToEmail = {};
         const userDetails = {};
-        const {client_secret, client_id, redirect_uris} = credContent;
+        const content = await fs.readFile('credentials.json').catch((error) => {
+            console.log('cred file not found! Create it');
+            throw error;
+        });
+
+    let credContent = JSON.parse(content);
+    const {client_secret, client_id, redirect_uris} = credContent.installed;
 
         // * Create an OAuth2 client with the given credentials
         const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
