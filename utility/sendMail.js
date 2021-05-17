@@ -1,3 +1,4 @@
+'use strict';
 const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const transporter = nodemailer.createTransport({
@@ -13,22 +14,15 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
+exports.sendEmails = (emailPayload, pinToEmail, userDetails) => {
     for (let index = 0; index < pinToEmail.length; index++) {
-        let payload = {
+        let payloadUser = {
             name: userDetails[pinToEmail[index]][1],
-            centerName: sessionData.name,
-            address: sessionData.address,
-            district_name: sessionData.district_name,
-            state_name: sessionData.state_name,
-            pincode: sessionData.pincode,
-            date: sessionInfo.date,
-            available_capacity: sessionInfo.available_capacity,
             unfollow: userDetails[pinToEmail[index]][3]
         }
         const toUSer = pinToEmail[index];
-        const fromMailer  = process.env.MAIL_USER;
-        ejs.renderFile(__dirname + "/email-body.ejs", {payload: payload}, (err, data) => {
+        const fromMailer  = process.env.FROM_USER;
+        ejs.renderFile(__dirname + "/email-body.ejs", {emailPayload: emailPayload, payloadUser: payloadUser}, (err, data) => {
             if (err) {
                 console.log(`EJS error: ${err}`);
             } else {
@@ -42,7 +36,7 @@ exports.sendEmails = (sessionInfo, sessionData, pinToEmail, userDetails) => {
                     if (err) {
                         console.log(`Email Error: ${JSON.stringify(err, null, 2)}`);
                     } else {
-                        console.log(`Email Sent sucessfully to ${pinToEmail[index]} for Date ${sessionInfo.date} and pincode ${sessionData.pincode}`)
+                        console.log(`Email Sent sucessfully to ${pinToEmail[index]} with payload ${JSON.stringify(emailPayload, null, 2)}`)
                         console.log('Message sent: ' + info.response);
                     }
                 });

@@ -68,8 +68,12 @@ let startApp = async () => {
                 // In case if servers are less and number of pincodes are high take the last 24 and hit them.
                 pincodes = pincodes.splice(pincodes.length - API_CALLS , API_CALLS)
             }
-        } 
+        }
+
         console.log(`pincodes going: ${pincodes}`);
+        // const lastEmailLogs = await fs.readFile('lastEmailLogs.json').catch((error) => {
+        //     console.log(`Not able to find local email logs, ${error}`);
+        // });
         await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail, userDetails)
         let allLocalData = {
             pincodes: pincodes,
@@ -77,6 +81,7 @@ let startApp = async () => {
             userDetails: userDetails
         }
         await fs.writeFile('localSheet.json', JSON.stringify(allLocalData));
+        // await fs.writeFile('lastEmailLogs.json', JSON.stringify(emailLogs));
         // console.log(JSON.stringify(slotData, null, 2));  
     } catch (error) {
         console.log(`Error in startApp, error is: ${error}`);
