@@ -20,7 +20,8 @@ try {
                     let emailPayload = [];
                     slotsData[slotIndex]["centers"].forEach(sessionData => {
                         sessionData["sessions"].forEach(sessionInfo => {
-                            if (sessionInfo.min_age_limit < 45 && sessionInfo.available_capacity > 0) {
+                            if (sessionInfo.min_age_limit < 45  && sessionInfo.available_capacity > 0 
+                                                                && sessionInfo.available_capacity_dose1 > 0) {
                                 emailPayload.push({
                                     centerName: sessionData.name,
                                     address: sessionData.address,
