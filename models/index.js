@@ -30,7 +30,7 @@ try {
                                     state_name: sessionData.state_name,
                                     pincode: sessionData.pincode,
                                     date: sessionInfo.date,
-                                    available_capacity: sessionInfo.available_capacity
+                                    available_capacity: sessionInfo.available_capacity_dose1
                                 });
                             }
                         })
@@ -40,7 +40,7 @@ try {
                         // Send email right now, dont await
                         console.log("Going to send mail to : " + JSON.stringify(pinToEmail[pincodeArray[pinIndex]]));
                         notify.sendEmails(emailPayload, pinToEmail[pincodeArray[pinIndex]], userDetails);
-                        emailLogs[sessionData.pincode] = [...pinToEmail[pincodeArray[pinIndex]]];
+                        emailLogs[pincodeArray[pinIndex]] = [...pinToEmail[pincodeArray[pinIndex]]];
                     }
                 }
             }
