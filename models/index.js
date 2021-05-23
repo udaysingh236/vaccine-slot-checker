@@ -35,8 +35,8 @@ try {
                             }
                         })
                     });
-                    if (emailPayload.length && !(emailLogs.hasOwnProperty(sessionData.pincode) || 
-                                                prevEmailLogs.hasOwnProperty(sessionData.pincode))) {
+                    if (emailPayload.length && !(emailLogs.hasOwnProperty(pincodeArray[pinIndex]) || 
+                                                prevEmailLogs.hasOwnProperty(pincodeArray[pinIndex]))) {
                         // Send email right now, dont await
                         console.log("Going to send mail to : " + JSON.stringify(pinToEmail[pincodeArray[pinIndex]]));
                         notify.sendEmails(emailPayload, pinToEmail[pincodeArray[pinIndex]], userDetails);
