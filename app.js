@@ -71,17 +71,21 @@ let startApp = async () => {
         }
 
         console.log(`pincodes going: ${pincodes}`);
-        // const lastEmailLogs = await fs.readFile('lastEmailLogs.json').catch((error) => {
-        //     console.log(`Not able to find local email logs, ${error}`);
-        // });
-        await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail, userDetails)
+        let lastEmailLogs = await fs.readFile('lastEmailLogs.json').catch((error) => {
+            console.log(`Not able to find local email logs, ${error}`);
+        });
+        // console.log("lastEmailLogs " + typeof lastEmailLogs);
+        if (typeof lastEmailLogs !== 'undefined') {
+            lastEmailLogs = JSON.parse(lastEmailLogs);
+        }
+        let emailLogs = await model.checkAvailibility(finalDatesArray, pincodes, pinToEmail, userDetails, lastEmailLogs)
         let allLocalData = {
             pincodes: pincodes,
             pinToEmail: pinToEmail,
             userDetails: userDetails
         }
         await fs.writeFile('localSheet.json', JSON.stringify(allLocalData));
-        // await fs.writeFile('lastEmailLogs.json', JSON.stringify(emailLogs));
+        await fs.writeFile('lastEmailLogs.json', JSON.stringify(emailLogs));
         // console.log(JSON.stringify(slotData, null, 2));  
     } catch (error) {
         console.log(`Error in startApp, error is: ${error}`);

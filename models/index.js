@@ -2,8 +2,9 @@
 const iolayer = require("../iolayer/fetchData");
 const notify = require("../utility/sendMail");
 
-exports.checkAvailibility = async (dateArray, pincodeArray, pinToEmail, userDetails) => {
+exports.checkAvailibility = async (dateArray, pincodeArray, pinToEmail, userDetails, prevEmailLogs = {}) => {
 try {
+    const emailLogs = {};
     for (let pinIndex = 0; pinIndex < pincodeArray.length; pinIndex++) {
         try {
             const promiseArray = [];
@@ -34,10 +35,12 @@ try {
                             }
                         })
                     });
-                    if (emailPayload.length) {
-                        // Send email right now, dont wait
+                    if (emailPayload.length && !(emailLogs.hasOwnProperty(sessionData.pincode) || 
+                                                prevEmailLogs.hasOwnProperty(sessionData.pincode))) {
+                        // Send email right now, dont await
                         console.log("Going to send mail to : " + JSON.stringify(pinToEmail[pincodeArray[pinIndex]]));
                         notify.sendEmails(emailPayload, pinToEmail[pincodeArray[pinIndex]], userDetails);
+                        emailLogs[sessionData.pincode] = [...pinToEmail[pincodeArray[pinIndex]]];
                     }
                 }
             }
@@ -45,6 +48,7 @@ try {
             console.log(`Error in checkAvailibility first loop, error is: ${error}`);
         }
     }
+    return emailLogs;
 } catch (error) {
     console.log(`Error in checkAvailibility, error is: ${error}`);
 }
